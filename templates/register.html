@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form Tutorial | Hamdan Khubaib</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="../Static/CSS/register.css">
+</head>
+
+<body>
+    <div class="container" id="Container">
+        <div class="login" id="Login">
+            <i class="fa-solid fa-xmark" id="close"></i>
+            <h1 class="logHeading log">Welcome Friend</h1>
+            <p class="logSubtext log"><span>To keep connected with us please</span> <span>login with your personal
+                    info</span></p>
+            <input type="button" id="LogSignButton" class="logSigninBtn log" value="SIGN IN">
+        </div>
+        <div class="signup" id="Signup">
+            <i class="fa-solid fa-bars" id="hamburger"></i>
+            <h1 class="singHeading">Create Account</h1>
+            <div class="signOptionsContainer">
+                <i class="fa-brands fa-google brand-logo"></i>
+                <i class="fa-brands fa-facebook-f brand-logo"></i>
+                <i class="fa-brands fa-twitter brand-logo"></i>
+                <i class="fa-brands fa-instagram brand-logo"></i>
+            </div>
+            <p class="singSubtext">or use your email for registration</p>
+            <div class="registerForm">
+                <div class="inputContainer">
+                    <i class="fa-solid fa-user icon"></i>
+                    <input type="text" class="registerField" id="nameField" placeholder="Name">
+                </div>
+                <div class="inputContainer">
+                    <i class="fa-solid fa-envelope icon"></i>
+                    <input type="email" class="registerField" id="EmailField" placeholder="Email">
+                </div>
+                <div class="inputContainer">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input type="password" class="registerField" id="PasswordField" placeholder="Password">
+                </div>
+                <input type="button" class="signbtn" id="Signbtn" value="SIGN UP">
+            </div>
+        </div>
+    </div>
+    <script src="../Static/JS/register.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #E2EAF4;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    width: 70%;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    font-size: xx-large;
+    font-style: normal;
+    color: #262290;
+}
+
+.sub-title {
+    font-size: smaller;
+    font-style: normal;
+    margin-top: 7px;
+    margin-bottom: 30px;
+}
+
+.input-container {
+    position: relative;
+    width: 27vw;
+    margin-bottom: 15px;
+}
+
+.input-container i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.textfield {
+    width: 100%;
+    height: 7vh;
+    padding-left: 35px;
+    border: 0.1px solid gray;
+    border-radius: 10px;
+    transition: all 1s ease-in-out;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 27vw;
+    height: 7vh;
+    border: 0.1px solid gray;
+    border-radius: 20px;
+    background-color: #262290;
+    color: white;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.logbtn:hover {
+    background-color: #060270;
+    cursor: pointer;
+}
+
+.signup {
+    margin-top: 5px;
+    font-size: smaller;
+}
+
+.Red::placeholder {
+    color: red;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .input-container,
+    .logbtn {
+        width: 80%;
+    }
+
+    .textfield {
+        height: 6vh;
+    }
+
+    .title {
+        font-size: x-large;
+    }
+
+    .sub-title {
+        font-size: small;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .input-container,
+    .logbtn {
+        width: 90%;
+    }
+
+    .textfield {
+        height: 6vh;
+    }
+
+    .title {
+        font-size: large;
+    }
+
+    .sub-title {
+        font-size: smaller;
+    }
+}

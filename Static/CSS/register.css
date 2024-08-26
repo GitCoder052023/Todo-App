@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#hamburger {
+    display: none;
+}
+
+#close {
+    display: none;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    width: 30vw;
+    height: 100vh;
+    background-color: #00b9a8;
+    color: white;
+    padding-top: 5px;
+    padding-left: 15px;
+    transition: all 1s ease-in-out;
+}
+
+.signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 70vw;
+    height: 100vh;
+    background-color: #fdfdfd;
+}
+
+.logHeading {
+    font-size: xx-large;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.logSubtext {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    font-size: small;
+}
+
+.logSigninBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #50eae9;
+    background-color: transparent;
+    color: white;
+    width: 50%;
+    height: 7%;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.logSigninBtn:hover {
+    border: 1px solid white;
+}
+
+.singHeading {
+    position: relative;
+    bottom: 100px;
+    font-size: xx-large;
+    font-weight: 900;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    letter-spacing: 8px;
+    color: #00bcad;
+}
+
+.signOptionsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    bottom: 65px;
+}
+
+.brand-logo {
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+    border: 1px solid grey;
+    opacity: 0.7;
+    transition: transform 0.4s ease-in;
+}
+
+.brand-logo:hover {
+    cursor: pointer;
+    opacity: 1;
+    transform: scale(1.13);
+}
+
+.singSubtext {
+    position: relative;
+    bottom: 20px;
+    font-size: medium;
+    color: grey;
+}
+
+.icon {
+    position: relative;
+    left: 30px;
+    color: gray;
+}
+
+.registerForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.registerField {
+    background-color: #eaf8eb;
+    border: none;
+    width: 35vw;
+    height: 7vh;
+    padding-left: 40px;
+}
+
+.signbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 10px;
+    width: 20vw;
+    border: none;
+    height: 8vh;
+    border-radius: 25px;
+    cursor: pointer;
+    color: white;
+    background-color: #00b9a8;
+    transition: background-color 0.2s ease-in;
+}
+
+.signbtn:hover {
+    background-color: #348d84;
+}
+
+.Red::placeholder {
+    color: red;
+}
+
+@media (max-width: 910px) {
+    .login {
+        position: relative;
+        left: -35%;
+    }
+
+    .signup {
+        width: 100vw;
+        min-width: 100vw;
+        margin-right: 200px;
+    }
+
+    #hamburger {
+        display: block;
+        position: relative;
+        right: 42vw;
+        bottom: 22vh;
+    }
+
+    .registerField {
+        width: 85vw;
+    }
+
+    .registerForm {
+        margin-left: 6vw;
+    }
+
+    .signbtn {
+        width: 30vw;
+    }
+
+    #close {
+        display: block;
+        position: relative;
+        bottom: 33vh;
+        left: 18vw;
+    }
+}

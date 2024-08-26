@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Todo App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <link rel="stylesheet" href="../Static/CSS/home.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Todo App</h1>
+            <div class="header-buttons">
+                <button id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="account-button" aria-label="My account">
+                    <i class="fas fa-user"></i>
+                </button>
+                <button class="logout-btn" id="logOutBtn">Logout</button>
+            </div>
+        </header>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new todo..." required>
+            <button type="submit">Add</button>
+        </form>
+        <ul id="todo-list"></ul>
+    </div>
+    <script src="../Static/JS/home.js"></script>
+</body>
+
+</html>

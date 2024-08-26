@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login form tutorial | Hamdan Khubaib</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="../Static/CSS/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="formContainer">
+            <div class="title">Login</div>
+            <div class="sub-title">Hey enter your details to sign in to your account</div>
+            <div class="login">
+                <form action="" id="loginForm" class="login loginForm">
+                    <div class="input-container">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="email" placeholder="Enter your email" class="textfield name" required name=""
+                            id="email">
+                    </div>
+                    <div class="input-container">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Enter your password" required name=""
+                            class="textfield password" id="password">
+                    </div>
+                    <input type="button" class="logbtn" id="logButton" value="Login In">
+                    <div class="signup">
+                        Don't have and account?
+                        <span class="Signup-link"><a href="/register">Signup Now</a></span>
+                    </div>
+                    <div class="signup">
+                        <span class="Signup-link" id="ForgetLink"><a href="reset">Foget Password?</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../Static/JS/index.js"></script>
+</body>
+
+</html>
