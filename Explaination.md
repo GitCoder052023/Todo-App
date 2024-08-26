@@ -110,4 +110,3 @@ This document provides a detailed explanation of the behind-the-scenes processes
 - **Nodemailer:** Nodemailer is used for sending emails, including password reset emails and OTPs. It provides a simple API for sending emails via different email providers.
 - **Bcrypt:** Bcrypt is used for hashing user passwords, making them secure and preventing them from being easily accessed.
 - **Crypto:** The `crypto` module is used for generating secure OTPs. It uses a secure random number generator to create unpredictable OTPs.
-- **Session Management:**  While this example doesn't explicitly demonstrate it, you'd typically use session management (e.g., with Express's `session` middleware) to store user login state and identify users across requests. 
