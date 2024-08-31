@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 currentUserEmail = data.email;
             } else {
-                throw new Error('Not logged in');
                 window.location.href = '/';
             }
         } catch (error) {

@@ -2,7 +2,7 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const path = require('path');
 const { connectToDatabase } = require('./Utilities/db');
-const {sendSecureOTPEmail, login, register, verifyOTP, updatePassword, logout} = require("./server");
+const {sendOTP, login, register, verifyOTP, updatePassword, logout} = require("./server");
 const app = express();
 const port = 8000;
 
@@ -26,7 +26,7 @@ app.get("/OTP", (req, res) => {
 app.post("/reset", (req, res) => {
     const { email } = req.body;
 
-    sendSecureOTPEmail("REPLACE WITH YOUR OWN EMAIL", "REPLACE WITH YOUR OWN APP PASSWORD", email).then(() => {
+    sendOTP("REPLACE WITH YOUR OWN EMAIL", "REPLACE WITH YOUR OWN APP PASSWORD", email).then(() => {
         res.json({ message: "OTP sent successfully" });
     }).catch(error => {
         console.error("Failed to send OTP", error);

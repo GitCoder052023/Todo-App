@@ -49,10 +49,8 @@ async function logout(email) {
   const todoCollection = db.collection('todos');
 
   try {
-    // Delete todos associated with the user
     await todoCollection.deleteMany({ email: email }); 
 
-    // Then delete the user
     const result = await userCollection.deleteOne({ email: email });
 
     if (result.deletedCount > 0) {
@@ -66,7 +64,7 @@ async function logout(email) {
   }
 }
 
-async function sendSecureOTPEmail(senderEmail, senderAppPassword, receiverEmail, additionalMessage = '') {
+async function sendOTP(senderEmail, senderAppPassword, receiverEmail, additionalMessage = '') {
 
   function generateSecureNumericOTP(length = 6) {
     const buffer = crypto.randomBytes(length);
@@ -166,4 +164,4 @@ async function updatePassword(email, newPassword) {
   }
 }
 
-module.exports = { sendSecureOTPEmail, login, register, verifyOTP, updatePassword, logout };
+module.exports = { sendOTP, login, register, verifyOTP, updatePassword, logout };
