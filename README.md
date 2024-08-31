@@ -40,8 +40,8 @@ This is a modern Todo app built with Node.js, Express, MongoDB, and Nodemailer. 
 
 2. **Setup MongoDB:**
    - Ensure MongoDB is running on your machine.
-   - Create a database named 'todoApp'.
-   - create collections named 'users', 'otps', 'todos'.
+   - Create a database named `todoApp`.
+   - create collections named `users`, `otps`, `todos`.
 
 3. **Replace Email Credentials:**
    - In `server.js`, replace `"REPLACE WITH YOUR OWN EMAIL"` with your actual email address and `"REPLACE WITH YOUR OWN APP PASSWORD"` with your app password for sending emails.
