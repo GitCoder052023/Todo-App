@@ -18,6 +18,8 @@ This is a modern Todo app built with Node.js, Express, MongoDB, and Nodemailer. 
     - Mark todo items as completed.
     - Delete todo items.
     - Store todo data in MongoDB.
+    - Search for specific items.
+    - Sort items by various criteria.
 - **User-Friendly Interface:**
     - Clean and modern design with a responsive layout.
     - Easy-to-use features for managing todo lists.
