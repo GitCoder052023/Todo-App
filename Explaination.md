@@ -22,39 +22,45 @@ The application utilizes a user-friendly interface built with HTML, CSS, and Jav
 
 ```
 todo-app/
-│   main.js
-│   server.js
+│   Explaination.md
+│   package-lock.json
+│   package.json
+│   README.md
 │
-├───Static
-│   ├───CSS
-│   │       home.css
-│   │       index.css
-│   │       OTPVerification.css
-│   │       register.css
-│   │       ResetPassword.css
-│   │       SubmitEmail.css
-│   │
-│   ├───JS
-│   │       home.js
-│   │       index.js
-│   │       OTPVerification.js
-│   │       register.js
-│   │       ResetPassword.js
-│   │       SubmitEmail.js
-│   │
-│   └───modules
-│           customAlert.js
-│
-├───templates
-│       home.html
-│       index.html
-│       OTPVerification.html
-│       register.html
-│       ResetPassword.html
-│       SubmitEmail.html
-│
-└───Utilities
-        db.js
+└───src
+    │   main.js
+    │   server.js
+    │
+    ├───Static
+    │   ├───CSS
+    │   │       home.css
+    │   │       index.css
+    │   │       OTPVerification.css
+    │   │       register.css
+    │   │       ResetPassword.css
+    │   │       SubmitEmail.css
+    │   │
+    │   ├───JS
+    │   │       home.js
+    │   │       index.js
+    │   │       OTPVerification.js
+    │   │       register.js
+    │   │       ResetPassword.js
+    │   │       SubmitEmail.js
+    │   │
+    │   └───modules
+    │           customAlert.js
+    │
+    ├───templates
+    │       home.html
+    │       index.html
+    │       OTPVerification.html
+    │       register.html
+    │       ResetPassword.html
+    │       SubmitEmail.html
+    │
+    └───Utilities
+            db.js
 
 ```
 
