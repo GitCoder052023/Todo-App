@@ -1,21 +1,21 @@
 :root {
+    --primary-color: #4CAF50;
     --bg-color: #f4f4f4;
-    --container-bg: #ffffff;
-    --text-color: #333333;
-    --input-bg: #ffffff;
-    --input-border: #dddddd;
-    --button-bg: #4CAF50;
-    --button-hover: #45a049;
-    --todo-bg: #f9f9f9;
-    --todo-border: #dddddd;
     --delete-button-bg: #f44336;
     --delete-button-hover: #d32f2f;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --input-bg: #ffffff;
+    --input-border: #e0e0e0;
+    --button-text: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
 }
 
-.dark-mode {
+/* Dark mode styles */
+body.dark-mode {
     --bg-color: #333333;
-    --container-bg: #444444;
+    --card-bg: #444444;
     --text-color: #ffffff;
     --input-bg: #555555;
     --input-border: #666666;
@@ -29,83 +29,50 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
+    background-color: var(--bg-color);
     margin: 0;
     padding: 0;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .container {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    width: 100%;
     max-width: 500px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: var(--container-bg);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: var(--transition);
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    padding: 2rem;
+    position: relative;
 }
 
 h1 {
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
     color: var(--text-color);
-    transition: var(--transition);
+    font-size: 2rem;
 }
 
-.header-buttons {
-    position: relative;
-    left: 29vw;
-    top: -6vh;
+#todo-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
 }
 
-.header-buttons button {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: var(--transition);
-    padding: 5px;
-    margin-left: 10px;
-}
-
-.header-buttons button:hover {
-    transform: scale(1.1);
-}
-
-.logout-btn {
-    background-color: #ff4b5c;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.logout-btn:hover {
-    background-color: #ff6b7a;
-    transform: translateY(-2px);
-}
-
-.logout-btn:active {
-    background-color: #e63946;
-    transform: translateY(0);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+#search-input, #sort-select {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    font-size: 1rem;
 }
 
 #todo-form {
     display: flex;
-    margin-bottom: 20px;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 #todo-input {
@@ -120,23 +87,24 @@ h1 {
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: var(--button-bg);
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--button-text);
     border: none;
-    border-radius: 0 5px 5px 0;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: var(--transition);
 }
 
 button:hover {
-    background-color: var(--button-hover);
+    opacity: 0.9;
 }
 
 #todo-list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 .todo-item {
@@ -150,18 +118,6 @@ button:hover {
     border-radius: 5px;
     transition: var(--transition);
     animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .todo-item.completed {
@@ -180,6 +136,11 @@ button:hover {
     background-color: var(--delete-button-hover);
 }
 
+
+.todo-item:last-child {
+    border-bottom: none;
+}
+
 .todo-item input[type="checkbox"] {
     margin-right: 10px;
 }
@@ -189,9 +150,46 @@ button:hover {
     margin: 0 10px;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header-buttons {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.theme-toggle, .logout-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.theme-toggle:hover, .logout-btn:hover {
+    color: var(--primary-color);
+}
+
 @media (max-width: 600px) {
     .container {
-        margin: 10px;
-        padding: 10px;
+        width: 90%;
+        padding: 1rem;
+    }
+
+    #todo-controls {
+        flex-direction: column;
     }
 }

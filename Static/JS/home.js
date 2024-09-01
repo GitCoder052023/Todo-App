@@ -1,26 +1,31 @@
-let userEmail = '';
+let userEmail = "";
+let todos = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-    const todoForm = document.getElementById('todo-form');
-    const todoInput = document.getElementById('todo-input');
-    const todoList = document.getElementById('todo-list');
-    const themeToggle = document.getElementById('theme-toggle');
-    const accountButton = document.getElementById('account-button');
-    const logoutButton = document.getElementById("logOutBtn")
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("search-input");
+  const sortSelect = document.getElementById("sort-select");
+  const themeToggle = document.getElementById("theme-toggle");
+  const logoutButton = document.getElementById("logOutBtn");
 
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const icon = themeToggle.querySelector('i');
-        icon.classList.toggle('fa-moon');
-        icon.classList.toggle('fa-sun');
-    });
+  searchInput.addEventListener("input", () => {
+    filterAndSortTodos();
+  });
 
-    accountButton.addEventListener('click', () => {
-        alert('Account functionality coming soon!');
-    });
+  sortSelect.addEventListener("change", () => {
+    filterAndSortTodos();
+  });
 
-    function createConfirmDialog(message = "Are you sure you want to proceed with this action?") {
-        const dialogHTML = `
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const icon = themeToggle.querySelector("i");
+    icon.classList.toggle("fa-moon");
+    icon.classList.toggle("fa-sun");
+  });
+
+  function createConfirmDialog(
+    message = "Are you sure you want to proceed with this action?"
+  ) {
+    const dialogHTML = `
         <style>
             .dialog-overlay {
                 position: fixed;
@@ -99,167 +104,211 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     `;
 
-        // Insert the dialog HTML into the document
-        const dialogContainer = document.createElement('div');
-        dialogContainer.innerHTML = dialogHTML;
-        document.body.appendChild(dialogContainer);
+    const dialogContainer = document.createElement("div");
+    dialogContainer.innerHTML = dialogHTML;
+    document.body.appendChild(dialogContainer);
 
-        const dialogOverlay = document.getElementById('dialogOverlay');
-        const confirmBtn = document.getElementById('confirmBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
+    const dialogOverlay = document.getElementById("dialogOverlay");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
 
-        return new Promise((resolve) => {
-            dialogOverlay.classList.add('active');
+    return new Promise((resolve) => {
+      dialogOverlay.classList.add("active");
 
-            function closeDialog(result) {
-                dialogOverlay.classList.remove('active');
-                // Remove the dialog from the DOM after the transition
-                setTimeout(() => {
-                    document.body.removeChild(dialogContainer);
-                }, 300);
-                resolve(result);
-            }
+      function closeDialog(result) {
+        dialogOverlay.classList.remove("active");
+        setTimeout(() => {
+          document.body.removeChild(dialogContainer);
+        }, 300);
+        resolve(result);
+      }
 
-            confirmBtn.addEventListener('click', () => closeDialog(true), { once: true });
-            cancelBtn.addEventListener('click', () => closeDialog(false), { once: true });
-            dialogOverlay.addEventListener('click', (e) => {
-                if (e.target === dialogOverlay) {
-                    closeDialog(false);
-                }
-            }, { once: true });
-        });
+      confirmBtn.addEventListener("click", () => closeDialog(true), {
+        once: true,
+      });
+      cancelBtn.addEventListener("click", () => closeDialog(false), {
+        once: true,
+      });
+      dialogOverlay.addEventListener(
+        "click",
+        (e) => {
+          if (e.target === dialogOverlay) {
+            closeDialog(false);
+          }
+        },
+        { once: true }
+      );
+    });
+  }
+
+  async function getCurrentUser() {
+    try {
+      const response = await fetch("/api/user");
+      if (response.ok) {
+        const data = await response.json();
+        currentUserEmail = data.email;
+      } else {
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
     }
+  }
 
-    async function getCurrentUser() {
-        try {
-            const response = await fetch('/api/user');
-            if (response.ok) {
-                const data = await response.json();
-                currentUserEmail = data.email;
-            } else {
-                window.location.href = '/';
-            }
-        } catch (error) {
-            console.error('Error fetching user:', error);
-        }
+  async function fetchTodos() {
+    try {
+      const response = await fetch(`/api/todos?email=${currentUserEmail}`);
+      todos = await response.json();
+      filterAndSortTodos();
+    } catch (error) {
+      console.error("Error fetching todos:", error);
     }
+  }
 
-    async function fetchTodos() {
-        try {
-            const response = await fetch(`/api/todos?email=${currentUserEmail}`);
-            const todos = await response.json();
-            renderTodos(todos);
-        } catch (error) {
-            console.error('Error fetching todos:', error);
-        }
+  async function addTodo(text) {
+    try {
+      const response = await fetch("/api/todos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text, email: currentUserEmail }),
+      });
+      const newTodo = await response.json();
+      todos.push(newTodo);
+      filterAndSortTodos();
+    } catch (error) {
+      console.error("Error adding todo:", error);
     }
+  }
 
-    async function addTodo(text) {
-        try {
-            const response = await fetch('/api/todos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ text, email: currentUserEmail }),
-            });
-            const newTodo = await response.json();
-            renderTodo(newTodo);
-        } catch (error) {
-            console.error('Error adding todo:', error);
-        }
+  async function updateTodo(id, completed) {
+    try {
+      await fetch(`/api/todos/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ completed }),
+      });
+
+      const todoIndex = todos.findIndex((todo) => todo._id === id);
+
+      if (todoIndex !== -1) {
+        todos[todoIndex].completed = completed;
+      }
+
+      filterAndSortTodos();
+    } catch (error) {
+      console.error("Error updating todo:", error);
     }
+  }
 
-    async function updateTodo(id, completed) {
-        try {
-            await fetch(`/api/todos/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ completed }),
-            });
-        } catch (error) {
-            console.error('Error updating todo:', error);
-        }
+  async function deleteTodo(id) {
+    try {
+      await fetch(`/api/todos/${id}`, {
+        method: "DELETE",
+      });
+
+      todos = todos.filter((todo) => todo._id !== id);
+      filterAndSortTodos();
+    } catch (error) {
+      console.error("Error deleting todo:", error);
     }
+  }
 
-    async function deleteTodo(id) {
-        try {
-            await fetch(`/api/todos/${id}`, {
-                method: 'DELETE',
-            });
-            document.getElementById(id).remove();
-        } catch (error) {
-            console.error('Error deleting todo:', error);
-        }
-    }
+  function filterAndSortTodos() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const sortOption = sortSelect.value;
 
-    function renderTodos(todos) {
-        const todoList = document.getElementById('todo-list');
-        todoList.innerHTML = '';
-        todos.forEach(renderTodo);
-    }
+    let filteredTodos = todos.filter((todo) =>
+      todo.text.toLowerCase().includes(searchTerm)
+    );
 
-    function renderTodo(todo) {
-        const li = document.createElement('li');
-        li.id = todo._id;
-        li.className = 'todo-item';
-        li.innerHTML = `
-                <input type="checkbox" ${todo.completed ? 'checked' : ''}>
+    filteredTodos.sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+
+      switch (sortOption) {
+        case "text-asc":
+          return a.text.localeCompare(b.text);
+        case "text-desc":
+          return b.text.localeCompare(a.text);
+        case "date-asc":
+          return new Date(a.createdAt) - new Date(b.createdAt);
+        case "date-desc":
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        default:
+          return 0;
+      }
+    });
+
+    renderTodos(filteredTodos);
+  }
+
+  function renderTodos(todos) {
+    const todoList = document.getElementById("todo-list");
+    todoList.innerHTML = "";
+    todos.forEach(renderTodo);
+  }
+
+  function renderTodo(todo) {
+    const li = document.createElement("li");
+    li.id = todo._id;
+    li.className = "todo-item";
+    li.innerHTML = `
+                <input type="checkbox" ${todo.completed ? "checked" : ""}>
                 <span>${todo.text}</span>
                 <button class="delete-btn">Delete</button>
             `;
-        li.querySelector('input').addEventListener('change', (e) => {
-            updateTodo(todo._id, e.target.checked);
-        });
-        li.querySelector('.delete-btn').addEventListener('click', () => {
-            deleteTodo(todo._id);
-        });
-        document.getElementById('todo-list').appendChild(li);
-    }
-
-    logoutButton.addEventListener("click", async () => {
-        const userEmail = currentUserEmail;
-        const confirmation = await createConfirmDialog("Are you sure you want to log out?")
-
-        if (confirmation) {
-            fetch('/logout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email: userEmail })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message === "Logout successful") {
-                        window.location.href = "/";
-                    } else {
-                        alert(data.message || "Failed to logout. Please try again.");
-                    }
-                })
-                .catch(error => console.error('Logout error:', error));
-        }
+    li.querySelector("input").addEventListener("change", (e) => {
+      updateTodo(todo._id, e.target.checked);
     });
-
-    accountButton.addEventListener("click", () => {
-        window.location.href = "http://localhost:8000/your-account"
-    })
-
-    document.getElementById('todo-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const input = document.getElementById('todo-input');
-        if (input.value.trim()) {
-            addTodo(input.value.trim());
-            input.value = '';
-        }
+    li.querySelector(".delete-btn").addEventListener("click", () => {
+      deleteTodo(todo._id);
     });
+    document.getElementById("todo-list").appendChild(li);
+  }
 
-    async function init() {
-        await getCurrentUser();
-        await fetchTodos();
+  logoutButton.addEventListener("click", async () => {
+    const userEmail = currentUserEmail;
+    const confirmation = await createConfirmDialog(
+      "Are you sure you want to log out?"
+    );
+
+    if (confirmation) {
+      fetch("/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: userEmail }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message === "Logout successful") {
+            window.location.href = "/";
+          } else {
+            alert(data.message || "Failed to logout. Please try again.");
+          }
+        })
+        .catch((error) => console.error("Logout error:", error));
     }
+  });
 
-    init();
+  document.getElementById("todo-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const input = document.getElementById("todo-input");
+    if (input.value.trim()) {
+      addTodo(input.value.trim());
+      input.value = "";
+    }
+  });
+
+  async function init() {
+    await getCurrentUser();
+    await fetchTodos();
+  }
+
+  init();
 });

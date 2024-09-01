@@ -5,11 +5,11 @@ const { connectToDatabase } = require('./Utilities/db');
 const {sendOTP, login, register, verifyOTP, updatePassword, logout} = require("./server");
 const app = express();
 const port = 8000;
+let currentUserEmail = '';
 
 app.use(express.json());
 app.use('/static', express.static(path.join(__dirname, 'Static')));
 
-let currentUserEmail = '';
 
 app.get("/", (req, res) => {
     res.sendFile("templates/index.html", { root: __dirname })

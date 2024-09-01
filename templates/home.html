@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,6 +21,16 @@
                 </button>
                 <button class="logout-btn" id="logOutBtn">Logout</button>
             </div>
+            <div id="todo-controls">
+                <input type="text" id="search-input" placeholder="Search todos...">
+                <select id="sort-select">
+                  <option value="default">Default</option>
+                  <option value="text-asc">Text (A-Z)</option>
+                  <option value="text-desc">Text (Z-A)</option>
+                  <option value="date-asc">Date (Oldest)</option>
+                  <option value="date-desc">Date (Newest)</option>
+                </select>
+              </div>
         </header>
         <form id="todo-form">
             <input type="text" id="todo-input" placeholder="Add a new todo..." required>
@@ -29,6 +39,50 @@
         <ul id="todo-list"></ul>
     </div>
     <script src="/Static/JS/home.js"></script>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="/Static/CSS/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-buttons">
+            <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+            <button class="logout-btn" id="logOutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+
+        <h1>Todo App</h1>
+
+        <div id="todo-controls">
+            <input type="text" id="search-input" placeholder="Search todos...">
+            <select id="sort-select">
+                <option value="default">Default</option>
+                <option value="text-asc">Text (A-Z)</option>
+                <option value="text-desc">Text (Z-A)</option>
+                <option value="date-asc">Date (Oldest)</option>
+                <option value="date-desc">Date (Newest)</option>
+            </select>
+        </div>
+
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new todo...">
+            <button type="submit">Add</button>
+        </form>
+
+        <ul id="todo-list"></ul>
+    </div>
+
+<script src="/Static/JS/home.js"></script>
 </body>
 
 </html>
