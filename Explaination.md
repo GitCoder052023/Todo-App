@@ -1,112 +1,109 @@
-## Explanation.md
+## Explaination.md
 
-This document provides a detailed explanation of the behind-the-scenes processes involved in the Modern Todo App with User Authentication.
+This document provides a detailed explanation of the Todo App codebase, designed to help developers understand its architecture, functionalities, and underlying technologies. 
 
-### User Authentication
+### 1. Project Overview
 
-**1. Registration:**
+This Todo App is a simple yet comprehensive web application built with Node.js, Express.js, MongoDB, and Nodemailer. It allows users to:
 
-- **Client-side:**
-    - The user fills in the registration form, including name, email, and password.
-    - The form data is sent to the server via a POST request.
-- **Server-side:**
-    - The server receives the registration data.
-    - It checks if a user with the same email already exists in the database.
-    - If the email is unique, the server hashes the user's password using bcrypt, which converts it into an irreversible hash.
-    - The hashed password, along with the user's name and email, is stored in the `users` collection in MongoDB.
-    - The server sends a success response to the client, indicating successful registration.
+* **Register** with email and password.
+* **Login** to access their todo lists.
+* **Create** new todo items.
+* **Mark** todo items as completed.
+* **Delete** todo items.
+* **Search** for specific todos within their list.
+* **Sort** their todo lists by various criteria.
+* **Reset** their passwords through email verification and password strength validation.
+* **Logout** from the application.
 
-**2. Login:**
+The application utilizes a user-friendly interface built with HTML, CSS, and JavaScript, and provides a smooth user experience with features like custom alerts and theming.
 
-- **Client-side:**
-    - The user enters their email and password.
-    - The form data is sent to the server via a POST request.
-- **Server-side:**
-    - The server receives the login data.
-    - It retrieves the user's data from the `users` collection based on the provided email.
-    - It compares the provided password with the stored hashed password using bcrypt's `compare()` function.
-    - If the passwords match, the server creates a session for the user, indicating they are logged in.
-    - The server sends a success response to the client, redirecting them to the home page.
+### 2. Codebase Structure
 
-**3. Logout:**
+```
+todo-app/
+│   main.js
+│   server.js
+│
+├───Static
+│   ├───CSS
+│   │       home.css
+│   │       index.css
+│   │       OTPVerification.css
+│   │       register.css
+│   │       ResetPassword.css
+│   │       SubmitEmail.css
+│   │
+│   ├───JS
+│   │       home.js
+│   │       index.js
+│   │       OTPVerification.js
+│   │       register.js
+│   │       ResetPassword.js
+│   │       SubmitEmail.js
+│   │
+│   └───modules
+│           customAlert.js
+│
+├───templates
+│       home.html
+│       index.html
+│       OTPVerification.html
+│       register.html
+│       ResetPassword.html
+│       SubmitEmail.html
+│
+└───Utilities
+        db.js
 
-- **Client-side:**
-    - The user clicks the Logout button.
-    - A POST request is sent to the server, including the user's email.
-- **Server-side:**
-    - The server receives the logout request.
-    - It deletes the user's todos from the `todos` collection based on the email.
-    - It deletes the user's data from the `users` collection.
-    - It ends the session for the user, effectively logging them out.
-    - The server sends a success response to the client, redirecting them to the login page.
+```
 
-### Password Reset
+### 3. Technologies Used
 
-**1. Request Password Reset:**
+* **Node.js:** A JavaScript runtime environment that powers the server-side logic.
+* **Express.js:** A web framework for Node.js, providing routing, middleware, and other essential features.
+* **MongoDB:** A NoSQL database used to store user data and todo lists.
+* **Nodemailer:** A Node.js library for sending emails, used for OTP and password reset functionalities.
+* **Bcrypt:** A library for hashing passwords, ensuring secure password storage.
+* **HTML, CSS, JavaScript:** Technologies used to build the front-end user interface. 
 
-- **Client-side:**
-    - The user clicks the "Forgot Password" link.
-    - The user enters their email address.
-- **Server-side:**
-    - The server receives the email.
-    - It checks if a user with the provided email exists in the database.
-    - If the email is valid, the server generates a secure OTP (One-Time Password).
-    - The OTP is stored in the `otps` collection in MongoDB, along with the user's email and the time it was generated.
-    - The server sends an email to the user containing the OTP and an expiration time.
+### 4. Server-Side Logic (server.js)
 
-**2. OTP Verification:**
+* **Database Connection (connectToDatabase):** Establishes a connection to the MongoDB database.
+* **User Authentication:**
+    * **register(name, email, password):** Creates a new user account with a hashed password.
+    * **login(email, password):** Authenticates users by comparing the provided password with the stored hashed password.
+    * **logout(email):** Removes the user's data from the database upon logout.
+* **Password Reset:**
+    * **sendOTP(senderEmail, senderAppPassword, receiverEmail, additionalMessage):** Sends a one-time password (OTP) to the user's email address using Nodemailer.
+    * **verifyOTP(email, enteredOTP):** Verifies the OTP entered by the user and deletes the corresponding entry from the database.
+    * **updatePassword(email, newPassword):** Updates the user's password with a hashed version of the new password.
 
-- **Client-side:**
-    - The user enters the received OTP.
-    - The OTP is sent to the server along with the user's email.
-- **Server-side:**
-    - The server receives the OTP and email.
-    - It retrieves the stored OTP from the `otps` collection based on the email.
-    - It checks if the entered OTP matches the stored OTP and if the OTP hasn't expired.
-    - If the verification is successful, the server deletes the OTP from the `otps` collection.
-    - The server sends a success response to the client, redirecting them to the password reset page.
+### 5. Client-Side Logic (Static/JS)
 
-**3. Password Update:**
+* **HTML Templates (Templates):**  Defines the structure of the web pages using HTML, including login, registration, OTP verification, password reset, and the home page.
+* **CSS Styling (Static/CSS):** Styles the web pages with CSS, providing visual appeal and user-friendliness.
+* **JavaScript Functionality (Static/JS):** Handles user interactions, form validation, data rendering, and communication with the server using AJAX requests.
+    * **Home Page (home.js):** Renders the user's todo list, handles adding, completing, deleting, searching, and sorting of todos.
+    * **Login Page (index.js):** Handles user login and redirects to the home page upon successful authentication.
+    * **Registration Page (register.js):** Handles user registration and redirects to the login page upon successful registration.
+    * **OTP Verification Page (OTPVerification.js):**  Handles OTP verification and redirects to the password reset page upon successful verification.
+    * **Password Reset Page (ResetPassword.js):** Handles password reset and redirects to the login page upon successful password update.
+    * **Submit Email Page (SubmitEmail.js):** Handles sending a password reset email and redirects to the OTP verification page.
 
-- **Client-side:**
-    - The user enters a new password and confirms it.
-- **Server-side:**
-    - The server receives the new password.
-    - It hashes the new password using bcrypt.
-    - It updates the user's password in the `users` collection.
-    - The server sends a success response to the client, redirecting them to the login page.
+### 6. Database Schema (MongoDB)
 
-### Todo List Management
+The MongoDB database contains two collections:
 
-**1. Adding Todos:**
+* **users:** Stores user data, including name, email, and hashed password.
+* **todos:** Stores todo items for each user, including text, completion status, and email (linking the todo to the user).
 
-- **Client-side:**
-    - The user enters a new todo item in the input field.
-    - The todo is sent to the server via a POST request.
-- **Server-side:**
-    - The server receives the todo item.
-    - It stores the todo item in the `todos` collection in MongoDB, along with the user's email and an initial status of "incomplete".
-    - The server sends a success response to the client, adding the new todo to the todo list.
+### 7. Security Considerations
 
-**2. Marking Todos as Completed:**
+* **Password Hashing:** Passwords are stored securely using Bcrypt's hashing algorithm, making it difficult to recover the original password even if the database is compromised.
+* **Input Validation:** Server-side code validates user inputs to prevent malicious attacks like SQL injection.
+* **HTTPS:** The application should be served over HTTPS to ensure secure communication between the client and server.
 
-- **Client-side:**
-    - The user checks the checkbox next to a todo item.
-- **Server-side:**
-    - The server receives the updated todo status (completed/incomplete).
-    - It updates the status of the todo item in the `todos` collection.
+### 8. Contributing
 
-**3. Deleting Todos:**
-
-- **Client-side:**
-    - The user clicks the "Delete" button next to a todo item.
-- **Server-side:**
-    - The server receives the request to delete the todo item.
-    - It deletes the todo item from the `todos` collection.
-
-### Technical Details
-
-- **MongoDB:** MongoDB is used as the database to store user data, OTPs, and todo items. It's a NoSQL database that offers flexible schema and scalability.
-- **Nodemailer:** Nodemailer is used for sending emails, including password reset emails and OTPs. It provides a simple API for sending emails via different email providers.
-- **Bcrypt:** Bcrypt is used for hashing user passwords, making them secure and preventing them from being easily accessed.
-- **Crypto:** The `crypto` module is used for generating secure OTPs. It uses a secure random number generator to create unpredictable OTPs.
+Contributions are welcome! Please refer to the contributing guidelines for more information on how to contribute.
