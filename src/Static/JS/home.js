@@ -148,7 +148,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
         currentUserEmail = data.email;
       } else {
-        window.location.href = "/";
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          window.location.href = "/";
+          return;
+        }
+
+        try {
+          const response = await fetch("/session/user", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            currentUserEmail = data.email;
+          } else {
+            window.location.href = "/";
+          }
+        } catch (error) {
+          console.error("Error fetching user:", error);
+          window.location.href = "/";
+        }
       }
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -277,6 +299,9 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (confirmation) {
+      localStorage.removeItem("token");
+      window.location.href = "/";
+
       fetch("/logout", {
         method: "POST",
         headers: {
